@@ -5,6 +5,7 @@ logger = logging.getLogger(__name__)
 log_level = logging.INFO
 logging.basicConfig(level=log_level)
 
+
 class BaseFanalytics:
     """
     Class Variables:
@@ -32,7 +33,6 @@ class BaseFanalytics:
                 compression='gzip', low_memory=False)
             self.data = self.data.append(self.data, sort=True)
             self.data.reset_index(drop=True, inplace=True)
-
 
     def _clean_data(self):
         """

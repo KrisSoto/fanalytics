@@ -1,5 +1,10 @@
+import logging
+
 from fanalytics.analytics import BaseFanalytics
 
+logger = logging.getLogger(__name__)
+log_level = logging.INFO
+logging.basicConfig(level=log_level)
 
 class PlayerFanalytics(BaseFanalytics):
     def __init__(self, years, player_info):

@@ -1,6 +1,5 @@
 import copy
 import logging
-import pandas as pd
 from fanalytics.player import PlayerFanalytics
 
 
@@ -29,11 +28,11 @@ class QbFanalytics(PlayerFanalytics):
         """
         return copy.deepcopy(self.data.loc[self.data['passer'] == self.name])
 
-    def mean_qb_epa(self, min_plays=500):
+    def mean_qb_epas(self, min_plays=500):
         """
         Gets the average qb EPA for years selected
 
-        :return: QB EPA
+        :return: This QB, All QBs EPA
         """
         logger.info("Getting mean of QB EPA.. if its good")
         qbs = self.data.groupby(['passer', 'posteam'], as_index=False).agg({
@@ -41,7 +40,7 @@ class QbFanalytics(PlayerFanalytics):
             'play_id': 'count'
         })
         qbs = qbs.loc[qbs.play_id > min_plays]
-        return qbs
+        return qbs[(qbs['passer'] == self.name)], qbs
 
 
 """
@@ -53,7 +52,5 @@ if __name__ == '__main__':
         'curr_team': 'MIA',
         'position': 'QB'
     })
-    epas = qb.mean_qb_epa()
-    tua_epa = epas[(epas['passer'] == 'T.Tagovailoa')]
-
-    print(tua_epa['qb_epa'])
+    tua_epa, all_epas = qb.mean_qb_epas()
+    print(tua_epa['qb_epa'], '\n', all_epas)
