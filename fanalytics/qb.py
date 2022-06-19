@@ -54,3 +54,5 @@ if __name__ == '__main__':
     })
     tua_epa, all_epas = qb.mean_qb_epas()
     print(tua_epa['qb_epa'], '\n', all_epas)
+    ranked = qb.rank_subset(all_epas, 'qb_epa', 32)
+    print(ranked)
